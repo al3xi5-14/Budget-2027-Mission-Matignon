@@ -44,11 +44,12 @@ type Group = {
   id: GroupId;
   title: string;
   subtitle: string;
+  seats: number;
   color: string;
   icon: ReactNode;
   demand: string;
   leverage: string;
-  offers: { label: string; detail: string; effect: string; tone: 'good' | 'warn' | 'neutral' }[];
+  offers: { label: string; detail: string; effect: string; seats: number; tone: 'good' | 'warn' | 'neutral' }[];
 };
 
 const groups: Group[] = [
@@ -56,56 +57,60 @@ const groups: Group[] = [
     id: 'A',
     title: 'Groupe A',
     subtitle: 'Les bâtisseurs',
+    seats: 128,
     color: '44 96% 62%',
     icon: <Landmark size={18} />,
-    demand: 'Un signal d’investissement productif, visible dès 2027.',
-    leverage: '12 sièges décisifs',
+    demand: 'Investir dans les usines et les infrastructures.',
+    leverage: '128 sièges',
     offers: [
-      { label: 'Plan d’investissement', detail: '3,2 Md€ pour l’industrie et les infrastructures.', effect: '+6 soutien', tone: 'good' },
-      { label: 'Clause de revoyure', detail: 'Une commission de suivi au printemps.', effect: '+3 soutien', tone: 'neutral' },
-      { label: 'Tenir la ligne', detail: 'Aucune dépense nouvelle. Défendre la trajectoire.', effect: '-4 soutien', tone: 'warn' },
+      { label: 'Plan d’investissement', detail: '3,2 Md€ pour l’industrie et les infrastructures.', effect: '+6 soutien', seats: 128, tone: 'good' },
+      { label: 'Clause de revoyure', detail: 'Une commission de suivi au printemps.', effect: '+3 soutien', seats: 70, tone: 'neutral' },
+      { label: 'Tenir la ligne', detail: 'Pas de nouvelle dépense.', effect: '-4 soutien', seats: 0, tone: 'warn' },
     ],
   },
   {
     id: 'B',
     title: 'Groupe B',
     subtitle: 'Les vigies sociales',
+    seats: 158,
     color: '166 48% 49%',
     icon: <Scale size={18} />,
-    demand: 'Protéger les ménages avant de protéger les indicateurs.',
-    leverage: '18 sièges à convaincre',
+    demand: 'Protéger les ménages les plus fragiles.',
+    leverage: '158 sièges',
     offers: [
-      { label: 'Bouclier ciblé', detail: 'Indexation des aides sur les trois premiers déciles.', effect: '+7 soutien', tone: 'good' },
-      { label: 'Conférence sociale', detail: 'Un rendez-vous public, sans crédit immédiat.', effect: '+2 soutien', tone: 'neutral' },
-      { label: 'Responsabilité budgétaire', detail: 'Pas de nouveau dispositif cette année.', effect: '-6 soutien', tone: 'warn' },
+      { label: 'Bouclier ciblé', detail: 'Aider les ménages qui en ont le plus besoin.', effect: '+7 soutien', seats: 158, tone: 'good' },
+      { label: 'Conférence sociale', detail: 'Organiser une discussion sans argent en plus.', effect: '+2 soutien', seats: 87, tone: 'neutral' },
+      { label: 'Rester ferme', detail: 'Ne pas créer de nouvelle aide cette année.', effect: '-6 soutien', seats: 0, tone: 'warn' },
     ],
   },
   {
     id: 'C',
     title: 'Groupe C',
     subtitle: 'Les territoires',
+    seats: 141,
     color: '201 78% 67%',
     icon: <Target size={18} />,
-    demand: 'Sortir les collectivités de la variable d’ajustement.',
-    leverage: '9 voix charnières',
+    demand: 'Donner plus de moyens aux territoires en difficulté.',
+    leverage: '141 sièges',
     offers: [
-      { label: 'Contrats territoriaux', detail: '1,1 Md€ fléchés vers les bassins fragiles.', effect: '+5 soutien', tone: 'good' },
-      { label: 'Garantie de méthode', detail: 'Un pacte de stabilité sans enveloppe dédiée.', effect: '+1 soutien', tone: 'neutral' },
-      { label: 'Décentraliser l’effort', detail: 'Les collectivités devront absorber la tension.', effect: '-5 soutien', tone: 'warn' },
+      { label: 'Contrats territoriaux', detail: '1,1 Md€ pour les bassins fragiles.', effect: '+5 soutien', seats: 141, tone: 'good' },
+      { label: 'Garantie de méthode', detail: 'Un accord de principe sans budget dédié.', effect: '+1 soutien', seats: 78, tone: 'neutral' },
+      { label: 'Demander un effort', detail: 'Les collectivités devront faire avec moins.', effect: '-5 soutien', seats: 0, tone: 'warn' },
     ],
   },
   {
     id: 'D',
     title: 'Groupe D',
     subtitle: 'Les gardiens du cap',
+    seats: 150,
     color: '4 70% 60%',
     icon: <ShieldAlert size={18} />,
-    demand: 'Réduire la dette sans affaiblir la parole de l’État.',
-    leverage: '14 votes sous conditions',
+    demand: 'Réduire la dette sans perdre le cap.',
+    leverage: '150 sièges',
     offers: [
-      { label: 'Économie structurelle', detail: 'Réforme de fonctionnement, rendement progressif.', effect: '+5 soutien', tone: 'good' },
-      { label: 'Garantie sur le déficit', detail: 'Un objectif chiffré, sans mesure nouvelle.', effect: '+2 soutien', tone: 'neutral' },
-      { label: 'Assumer le risque', detail: 'Conserver la copie actuelle au nom de la cohérence.', effect: '-3 soutien', tone: 'warn' },
+      { label: 'Économie structurelle', detail: 'Réduire les dépenses progressivement.', effect: '+5 soutien', seats: 150, tone: 'good' },
+      { label: 'Garantie sur le déficit', detail: 'Promettre un objectif clair, sans nouvelle mesure.', effect: '+2 soutien', seats: 83, tone: 'neutral' },
+      { label: 'Garder le texte', detail: 'Ne rien changer au budget actuel.', effect: '-3 soutien', seats: 0, tone: 'warn' },
     ],
   },
 ];
@@ -121,6 +126,17 @@ const phaseLabels: Record<Phase, string> = {
   ending: 'Verdict',
 };
 const phaseOrder: Phase[] = ['briefing', 'budget', 'negotiation', 'election', 'confidence', 'vote', 'ending'];
+const TOTAL_SEATS = 577;
+const MAJORITY_SEATS = 289;
+
+function seatsForOffer(groupId: GroupId, offerIndex: number | undefined) {
+  if (offerIndex === undefined) return 0;
+  return groups.find((group) => group.id === groupId)?.offers[offerIndex]?.seats ?? 0;
+}
+
+function supportChange(offerIndex: number) {
+  return offerIndex === 0 ? 4 : offerIndex === 1 ? 1 : -3;
+}
 
 function Metric({ label, value, suffix, tone = 'default', icon }: { label: string; value: string | number; suffix?: string; tone?: 'default' | 'good' | 'danger'; icon?: ReactNode }) {
   const colors = tone === 'good' ? 'text-[hsl(var(--accent))]' : tone === 'danger' ? 'text-[hsl(var(--destructive))]' : 'text-[hsl(var(--foreground))]';
@@ -186,7 +202,7 @@ function ProgressRail({ phase }: { phase: Phase }) {
   );
 }
 
-function Topbar({ phase, support, risk }: { phase: Phase; support: number; risk: number }) {
+function Topbar({ phase, support, risk, seatsFor }: { phase: Phase; support: number; risk: number; seatsFor: number }) {
   return (
     <header className="sticky top-0 z-10 border-b border-[hsl(var(--border))] bg-[hsl(var(--background)/.94)] px-4 py-3 backdrop-blur-md sm:px-6">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
@@ -197,6 +213,7 @@ function Topbar({ phase, support, risk }: { phase: Phase; support: number; risk:
         <div className="hidden items-center gap-2 text-xs text-[hsl(var(--muted-foreground))] sm:flex"><span className="font-mono uppercase tracking-[.13em]">Session 01</span><ChevronRight size={13} /><span>{phaseLabels[phase]}</span></div>
         <div className="ml-auto flex items-center gap-4 sm:gap-7">
           <Metric label="Soutien" value={support} suffix="/ 100" tone={support < 40 ? 'danger' : support > 62 ? 'good' : 'default'} icon={<Users size={14} />} />
+          <Metric label="Voix sûres" value={seatsFor} suffix="/ 577" tone={seatsFor >= 289 ? 'good' : 'default'} icon={<VoteIcon size={14} />} />
           <Metric label="Risque de censure" value={risk} suffix="%" tone={risk > 58 ? 'danger' : 'default'} icon={<ShieldAlert size={14} />} />
         </div>
       </div>
@@ -214,7 +231,7 @@ function Landing({ onStart }: { onStart: () => void }) {
           <div className="mb-8 flex items-center gap-3"><div className="flex size-11 items-center justify-center border border-[hsl(var(--primary)/.65)] bg-[hsl(var(--primary)/.1)] text-[hsl(var(--primary))]"><Landmark size={21} /></div><div><p className="font-mono text-[10px] uppercase tracking-[.28em] text-[hsl(var(--primary))]">République française</p><p className="font-mono text-[10px] uppercase tracking-[.16em] text-[hsl(var(--muted-foreground))]">Dossier de crise · 2027</p></div></div>
           <p className="mb-5 font-mono text-[11px] uppercase tracking-[.3em] text-[hsl(var(--muted-foreground))]">Simulation politique</p>
           <h1 className="max-w-3xl font-serif text-[clamp(3.5rem,9vw,7.8rem)] leading-[.84] tracking-[-.045em] text-[hsl(var(--foreground))]">Mission<br /><span className="text-[hsl(var(--primary))]">Matignon</span></h1>
-          <p className="mt-8 max-w-xl text-base leading-relaxed text-[hsl(var(--muted-foreground))] sm:text-lg">Vous êtes à la tête du gouvernement. Dans quelques semaines, l’Assemblée doit se prononcer sur votre budget 2027. Chaque concession vous rapproche du vote — et éloigne votre cap.</p>
+          <p className="mt-8 max-w-xl text-base leading-relaxed text-[hsl(var(--muted-foreground))] sm:text-lg">Vous dirigez le gouvernement. Dans quelques semaines, l’Assemblée votera votre budget 2027. Pour le faire passer, vous devrez convaincre des groupes qui n’ont pas tous les mêmes priorités.</p>
           <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center"><Button testId="button-start-mission" onClick={onStart} className="group min-w-52">Entrer en session <ArrowRight size={17} className="transition group-hover:translate-x-1" /></Button><span className="font-mono text-[10px] uppercase tracking-[.16em] text-[hsl(var(--muted-foreground))]">Durée · 8 à 12 min</span></div>
         </div>
         <div className="animate-rise-in [animation-delay:120ms]">
@@ -222,7 +239,7 @@ function Landing({ onStart }: { onStart: () => void }) {
             <div className="absolute right-0 top-0 h-px w-1/2 bg-[hsl(var(--primary))]" />
             <div className="mb-8 flex items-center justify-between"><p className="font-mono text-[10px] uppercase tracking-[.2em] text-[hsl(var(--primary))]">Note de situation</p><span className="flex items-center gap-1.5 font-mono text-[9px] text-[hsl(var(--muted-foreground))]"><span className="size-1.5 animate-pulse-soft bg-[hsl(var(--accent))]" /> ACTIF</span></div>
             <div className="space-y-5">
-              {[['01', 'Le budget', '48 heures pour trouver 11 milliards d’économies.'], ['02', 'Le Parlement', 'Quatre groupes. Une majorité introuvable.'], ['03', 'Le risque', 'Chaque voix a un prix. Chaque silence aussi.']].map(([num, title, body]) => <div key={num} className="flex gap-4 border-t border-[hsl(var(--border))] pt-4"><span className="font-mono text-[10px] text-[hsl(var(--primary))]">{num}</span><div><p className="font-semibold text-[hsl(var(--foreground))]">{title}</p><p className="mt-1 text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">{body}</p></div></div>)}
+              {[['01', 'Le budget', 'Il faut trouver 11 milliards d’économies.'], ['02', 'Le Parlement', 'Quatre groupes. Pas de majorité.'], ['03', 'Le risque', 'Chaque accord peut changer le résultat.']].map(([num, title, body]) => <div key={num} className="flex gap-4 border-t border-[hsl(var(--border))] pt-4"><span className="font-mono text-[10px] text-[hsl(var(--primary))]">{num}</span><div><p className="font-semibold text-[hsl(var(--foreground))]">{title}</p><p className="mt-1 text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">{body}</p></div></div>)}
             </div>
             <div className="mt-8 flex items-center justify-between border-t border-[hsl(var(--border))] pt-4"><span className="font-mono text-[9px] uppercase tracking-[.15em] text-[hsl(var(--muted-foreground))]">Accès direct</span><span className="font-mono text-xs text-[hsl(var(--foreground))]">MAT-27 / 01</span></div>
           </div>
@@ -237,7 +254,7 @@ function ScreenTitle({ eyebrow, title, intro, icon }: { eyebrow: string; title: 
 }
 
 function Briefing({ onContinue }: { onContinue: () => void }) {
-  return <div className="mx-auto max-w-5xl"><ScreenTitle eyebrow="Étape 01 · briefing" title="La copie est entre vos mains." intro="Le Président vous donne une fenêtre étroite. Votre budget doit financer les priorités du pays, respecter une trajectoire crédible et survivre à l’Assemblée." icon={<BookOpen size={19} />} /><div className="grid gap-4 md:grid-cols-3">{[['Objectif', 'Faire adopter le budget 2027 au vote final.', <Flag size={18} />], ['Marge', '11 Md€ d’économies à identifier.', <BarChart3 size={18} />], ['Menace', 'Une motion de censure est déjà prête.', <BadgeAlert size={18} />]].map(([title, body, icon], index) => <div key={String(title)} className={`border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5 animate-rise-in [animation-delay:${index * 80}ms]`}><div className="mb-8 flex size-9 items-center justify-center bg-[hsl(var(--secondary))] text-[hsl(var(--primary))]">{icon}</div><p className="font-mono text-[10px] uppercase tracking-[.16em] text-[hsl(var(--muted-foreground))]">{title}</p><p className="mt-2 text-sm leading-relaxed text-[hsl(var(--foreground))]">{body}</p></div>)}</div><div className="mt-8 flex flex-col items-start justify-between gap-4 border-t border-[hsl(var(--border))] pt-6 sm:flex-row sm:items-center"><p className="flex items-center gap-2 text-xs text-[hsl(var(--muted-foreground))]"><CircleHelp size={14} /> Vous pourrez ajuster vos choix avant le vote.</p><Button testId="button-open-budget" onClick={onContinue}>Ouvrir le budget <ArrowRight size={16} /></Button></div></div>;
+  return <div className="mx-auto max-w-5xl"><ScreenTitle eyebrow="Étape 01 · briefing" title="Votre mission." intro="Le Président vous laisse peu de temps. Il faut préparer un budget crédible et trouver assez de voix à l’Assemblée." icon={<BookOpen size={19} />} /><div className="grid gap-4 md:grid-cols-3">{[['Objectif', 'Faire adopter le budget 2027.', <Flag size={18} />], ['À trouver', '11 milliards d’économies.', <BarChart3 size={18} />], ['Danger', 'Une motion de censure est possible.', <BadgeAlert size={18} />]].map(([title, body, icon], index) => <div key={String(title)} className={`border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5 animate-rise-in [animation-delay:${index * 80}ms]`}><div className="mb-8 flex size-9 items-center justify-center bg-[hsl(var(--secondary))] text-[hsl(var(--primary))]">{icon}</div><p className="font-mono text-[10px] uppercase tracking-[.16em] text-[hsl(var(--muted-foreground))]">{title}</p><p className="mt-2 text-sm leading-relaxed text-[hsl(var(--foreground))]">{body}</p></div>)}</div><div className="mt-8 flex flex-col items-start justify-between gap-4 border-t border-[hsl(var(--border))] pt-6 sm:flex-row sm:items-center"><p className="flex items-center gap-2 text-xs text-[hsl(var(--muted-foreground))]"><CircleHelp size={14} /> Vous pourrez encore réfléchir avant le vote.</p><Button testId="button-open-budget" onClick={onContinue}>Préparer le budget <ArrowRight size={16} /></Button></div></div>;
 }
 
 function Budget({ budget, onBudgetChange, onContinue }: { budget: { defense: number; transition: number; social: number }; onBudgetChange: (key: keyof typeof budget, value: number) => void; onContinue: () => void }) {
@@ -245,10 +262,10 @@ function Budget({ budget, onBudgetChange, onContinue }: { budget: { defense: num
   return <div className="mx-auto max-w-5xl"><ScreenTitle eyebrow="Étape 02 · arbitrage" title="Donnez une forme au cap." intro="Trois enveloppes structurent votre budget. Les curseurs sont des arbitrages politiques, pas de simples lignes comptables." icon={<BarChart3 size={19} />} /><div className="grid gap-5 lg:grid-cols-[1.1fr_.9fr]"><div className="border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5 sm:p-7"><div className="mb-7 flex items-end justify-between border-b border-[hsl(var(--border))] pb-4"><div><p className="font-mono text-[10px] uppercase tracking-[.18em] text-[hsl(var(--muted-foreground))]">Répartition proposée</p><p className="mt-1 font-serif text-2xl">Dépenses prioritaires</p></div><span className="font-mono text-sm text-[hsl(var(--primary))]">{total} Md€</span></div><div className="space-y-7">{([['defense', 'Souveraineté & sécurité', 'Renforcer les moyens régaliens.'], ['transition', 'Transition productive', 'Transformer sans casser l’appareil industriel.'], ['social', 'Cohésion sociale', 'Protéger les foyers les plus exposés.']] as const).map(([key, label, detail]) => <label key={key} className="block"><div className="mb-2 flex items-start justify-between gap-3"><div><span className="text-sm font-semibold">{label}</span><p className="mt-1 text-xs text-[hsl(var(--muted-foreground))]">{detail}</p></div><span className="font-mono text-sm text-[hsl(var(--primary))]">{budget[key]} Md€</span></div><input data-testid={`input-budget-${key}`} aria-label={label} type="range" min="2" max="10" value={budget[key]} onChange={(event) => onBudgetChange(key, Number(event.target.value))} className="h-1.5 w-full cursor-pointer accent-[hsl(var(--primary))]" /></label>)}</div></div><div className="border border-[hsl(var(--border))] bg-[hsl(var(--sidebar))] p-5 sm:p-7"><div className="flex items-center justify-between"><p className="font-mono text-[10px] uppercase tracking-[.18em] text-[hsl(var(--muted-foreground))]">Lecture politique</p><Gauge size={17} className="text-[hsl(var(--primary))]" /></div><div className="mt-8 space-y-6"><div><div className="mb-2 flex justify-between text-xs"><span>Crédibilité financière</span><span className="font-mono text-[hsl(var(--accent))]">{Math.max(38, 82 - Math.abs(total - 18) * 8)}%</span></div><div className="h-1.5 bg-[hsl(var(--secondary))]"><div className="h-full bg-[hsl(var(--accent))] transition-all" style={{ width: `${Math.max(38, 82 - Math.abs(total - 18) * 8)}%` }} /></div></div><div><div className="mb-2 flex justify-between text-xs"><span>Acceptabilité sociale</span><span className="font-mono text-[hsl(var(--primary))]">{Math.min(96, 46 + budget.social * 5)}%</span></div><div className="h-1.5 bg-[hsl(var(--secondary))]"><div className="h-full bg-[hsl(var(--primary))] transition-all" style={{ width: `${Math.min(96, 46 + budget.social * 5)}%` }} /></div></div><div className="border-l-2 border-[hsl(var(--primary))] bg-[hsl(var(--primary)/.07)] p-3 text-xs leading-relaxed text-[hsl(var(--muted-foreground))]">Une enveloppe trop généreuse est populaire aujourd’hui. Elle sera une faiblesse demain, autour de la table.</div></div></div></div><div className="mt-7 flex justify-end"><Button testId="button-lock-budget" onClick={onContinue}>Verrouiller les arbitrages <LockKeyhole size={15} /></Button></div></div>;
 }
 
-function Negotiation({ negotiated, selectedGroup, onSelectGroup, onChoose, onContinue }: { negotiated: Partial<Record<GroupId, number>>; selectedGroup: GroupId; onSelectGroup: (id: GroupId) => void; onChoose: (group: GroupId, offer: number) => void; onContinue: () => void }) {
+function Negotiation({ negotiated, selectedGroup, seatsFor, onSelectGroup, onChoose, onContinue }: { negotiated: Partial<Record<GroupId, number>>; selectedGroup: GroupId; seatsFor: number; onSelectGroup: (id: GroupId) => void; onChoose: (group: GroupId, offer: number) => void; onContinue: () => void }) {
   const group = groups.find((item) => item.id === selectedGroup) ?? groups[0];
   const allDone = Object.keys(negotiated).length === groups.length;
-  return <div className="mx-auto max-w-6xl"><ScreenTitle eyebrow="Étape 03 · négociations" title="Acheter du temps, pas des illusions." intro="Chaque groupe a une demande claire et une capacité de nuisance réelle. Une promesse apaise une salle — elle engage aussi votre prochain chapitre." icon={<Users size={19} />} /><div className="grid gap-5 lg:grid-cols-[.72fr_1.28fr]"><div className="space-y-2">{groups.map((item) => { const done = negotiated[item.id] !== undefined; return <button data-testid={`button-group-${item.id}`} type="button" key={item.id} onClick={() => onSelectGroup(item.id)} className={`flex w-full items-center gap-3 border p-4 text-left transition ${selectedGroup === item.id ? 'border-[hsl(var(--primary)/.7)] bg-[hsl(var(--primary)/.08)]' : 'border-[hsl(var(--border))] bg-[hsl(var(--card))] hover:border-[hsl(var(--muted-foreground)/.5)]'}`}><span className="flex size-9 shrink-0 items-center justify-center border" style={{ color: `hsl(${item.color})`, borderColor: `hsl(${item.color} / .45)` }}>{item.icon}</span><span className="min-w-0 flex-1"><span className="block text-sm font-semibold">{item.title}</span><span className="mt-1 block text-xs text-[hsl(var(--muted-foreground))]">{item.subtitle}</span></span>{done ? <span className="flex size-5 items-center justify-center rounded-full bg-[hsl(var(--accent)/.16)] text-[hsl(var(--accent))]"><Check size={12} /></span> : <ChevronRight size={15} className="text-[hsl(var(--muted-foreground))]" />}</button> })}</div><div className="border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5 sm:p-7"><div className="mb-6 flex items-start justify-between gap-4 border-b border-[hsl(var(--border))] pb-5"><div><p className="font-mono text-[10px] uppercase tracking-[.18em]" style={{ color: `hsl(${group.color})` }}>{group.title} · {group.subtitle}</p><p className="mt-3 max-w-xl font-serif text-2xl leading-tight">{group.demand}</p></div><span className="shrink-0 border border-[hsl(var(--border))] px-2 py-1 font-mono text-[9px] uppercase text-[hsl(var(--muted-foreground))]">{group.leverage}</span></div><p className="mb-3 text-xs text-[hsl(var(--muted-foreground))]">Quelle concession êtes-vous prêt à assumer ?</p><div className="space-y-2">{group.offers.map((offer, index) => <button data-testid={`button-offer-${group.id}-${index}`} type="button" key={offer.label} onClick={() => onChoose(group.id, index)} className={`group flex w-full items-center justify-between gap-4 border p-4 text-left transition ${negotiated[group.id] === index ? 'border-[hsl(var(--accent)/.7)] bg-[hsl(var(--accent)/.08)]' : 'border-[hsl(var(--border))] bg-[hsl(var(--background)/.34)] hover:border-[hsl(var(--primary)/.65)]'}`}><span><span className="flex items-center gap-2 text-sm font-semibold">{offer.label}{negotiated[group.id] === index && <Check size={14} className="text-[hsl(var(--accent))]" />}</span><span className="mt-1 block text-xs text-[hsl(var(--muted-foreground))]">{offer.detail}</span></span><span className={`shrink-0 font-mono text-[10px] ${offer.tone === 'good' ? 'text-[hsl(var(--accent))]' : offer.tone === 'warn' ? 'text-[hsl(var(--destructive))]' : 'text-[hsl(var(--muted-foreground))]'}`}>{offer.effect}</span></button>)}</div><div className="mt-6 flex items-center justify-between border-t border-[hsl(var(--border))] pt-5"><span className="font-mono text-[10px] uppercase tracking-[.12em] text-[hsl(var(--muted-foreground))]">{allDone ? 'Accords consignés · tour terminé' : `${Object.keys(negotiated).length} / 4 entretiens consignés`}</span><Button testId="button-continue-negotiation" onClick={onContinue} disabled={!allDone}>Passer au contexte <ArrowRight size={15} /></Button></div></div></div></div>;
+  return <div className="mx-auto max-w-6xl"><ScreenTitle eyebrow="Étape 03 · négociations" title="Convaincre les groupes." intro="Chaque groupe a une demande. À vous de choisir jusqu’où vous êtes prêt à aller." icon={<Users size={19} />} /><div className="mb-5 grid gap-3 sm:grid-cols-3"><div className="border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-4"><p className="font-mono text-[9px] uppercase tracking-[.16em] text-[hsl(var(--muted-foreground))]">Voix sûres</p><p className="mt-2 font-mono text-2xl text-[hsl(var(--primary))]">{seatsFor}<span className="ml-1 text-sm text-[hsl(var(--muted-foreground))]">/ 577</span></p></div><div className="border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-4"><p className="font-mono text-[9px] uppercase tracking-[.16em] text-[hsl(var(--muted-foreground))]">Majorité</p><p className="mt-2 font-mono text-2xl text-[hsl(var(--accent))]">289<span className="ml-1 text-sm text-[hsl(var(--muted-foreground))]">voix</span></p></div><div className="border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-4"><p className="font-mono text-[9px] uppercase tracking-[.16em] text-[hsl(var(--muted-foreground))]">Reste à trouver</p><p className="mt-2 font-mono text-2xl text-[hsl(var(--foreground))]">{Math.max(0, 289 - seatsFor)}<span className="ml-1 text-sm text-[hsl(var(--muted-foreground))]">voix</span></p></div></div><div className="grid gap-5 lg:grid-cols-[.72fr_1.28fr]"><div className="space-y-2">{groups.map((item) => { const done = negotiated[item.id] !== undefined; return <button data-testid={`button-group-${item.id}`} type="button" key={item.id} onClick={() => onSelectGroup(item.id)} className={`flex w-full items-center gap-3 border p-4 text-left transition ${selectedGroup === item.id ? 'border-[hsl(var(--primary)/.7)] bg-[hsl(var(--primary)/.08)]' : 'border-[hsl(var(--border))] bg-[hsl(var(--card))] hover:border-[hsl(var(--muted-foreground)/.5)]'}`}><span className="flex size-9 shrink-0 items-center justify-center border" style={{ color: `hsl(${item.color})`, borderColor: `hsl(${item.color} / .45)` }}>{item.icon}</span><span className="min-w-0 flex-1"><span className="block text-sm font-semibold">{item.title}</span><span className="mt-1 block text-xs text-[hsl(var(--muted-foreground))]">{item.seats} sièges · {item.subtitle}</span></span>{done ? <span className="flex size-5 items-center justify-center rounded-full bg-[hsl(var(--accent)/.16)] text-[hsl(var(--accent))]"><Check size={12} /></span> : <ChevronRight size={15} className="text-[hsl(var(--muted-foreground))]" />}</button> })}</div><div className="border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5 sm:p-7"><div className="mb-6 flex items-start justify-between gap-4 border-b border-[hsl(var(--border))] pb-5"><div><p className="font-mono text-[10px] uppercase tracking-[.18em]" style={{ color: `hsl(${group.color})` }}>{group.title} · {group.subtitle}</p><p className="mt-3 max-w-xl font-serif text-2xl leading-tight">{group.demand}</p></div><span className="shrink-0 border border-[hsl(var(--border))] px-2 py-1 font-mono text-[9px] uppercase text-[hsl(var(--muted-foreground))]">{group.leverage}</span></div><p className="mb-3 text-xs text-[hsl(var(--muted-foreground))]">Quel compromis êtes-vous prêt à accepter ?</p><div className="space-y-2">{group.offers.map((offer, index) => <button data-testid={`button-offer-${group.id}-${index}`} type="button" key={offer.label} onClick={() => onChoose(group.id, index)} className={`group flex w-full items-center justify-between gap-4 border p-4 text-left transition ${negotiated[group.id] === index ? 'border-[hsl(var(--accent)/.7)] bg-[hsl(var(--accent)/.08)]' : 'border-[hsl(var(--border))] bg-[hsl(var(--background)/.34)] hover:border-[hsl(var(--primary)/.65)]'}`}><span><span className="flex items-center gap-2 text-sm font-semibold">{offer.label}{negotiated[group.id] === index && <Check size={14} className="text-[hsl(var(--accent))]" />}</span><span className="mt-1 block text-xs text-[hsl(var(--muted-foreground))]">{offer.detail}</span></span><span className="flex shrink-0 flex-col items-end gap-1 font-mono text-[10px]"><span className={offer.tone === 'good' ? 'text-[hsl(var(--accent))]' : offer.tone === 'warn' ? 'text-[hsl(var(--destructive))]' : 'text-[hsl(var(--muted-foreground))]'}>{offer.effect}</span><span className="text-[hsl(var(--muted-foreground))]">{offer.seats} voix</span></span></button>)}</div><div className="mt-6 flex items-center justify-between border-t border-[hsl(var(--border))] pt-5"><span className="font-mono text-[10px] uppercase tracking-[.12em] text-[hsl(var(--muted-foreground))]">{allDone ? 'Tous les groupes ont répondu' : `${Object.keys(negotiated).length} / 4 groupes rencontrés`}</span><Button testId="button-continue-negotiation" onClick={onContinue} disabled={!allDone}>Voir la suite <ArrowRight size={15} /></Button></div></div></div></div>;
 }
 
 function Election({ onContinue }: { onContinue: () => void }) {
@@ -281,9 +298,29 @@ export function MissionMatignon({ callbacks }: { callbacks?: MissionMatignonCall
   const act = (action: GameAction, next?: Phase) => { callbacks?.onAction?.(action); if (next) updatePhase(next); };
   if (phase === 'landing') return <Landing onStart={() => act({ type: 'start' }, 'briefing')} />;
   const changeBudget = (key: keyof typeof budget, value: number) => { setBudget((old) => ({ ...old, [key]: value })); callbacks?.onAction?.({ type: 'budget-change', payload: { key, value } }); };
-  const chooseOffer = (group: GroupId, offer: number) => { setNegotiated((old) => ({ ...old, [group]: offer })); setSupport((old) => Math.max(0, Math.min(100, old + (offer === 0 ? 4 : offer === 1 ? 1 : -3)))); setRisk((old) => Math.max(0, Math.min(100, old + (offer === 2 ? 5 : -1)))); act({ type: 'negotiation', payload: { group, offer } }); };
-  const finishVote = (wasAmendment: boolean) => { const won = wasAmendment || support >= 51; setSuccess(won); act({ type: 'final-vote', payload: { won, choice: confidenceChoice, wasAmendment } }, 'ending'); };
-  return <div className="noise-bg min-h-[100dvh] bg-[hsl(var(--background))]"><div className="flex min-h-[100dvh]"><ProgressRail phase={phase} /><div className="min-w-0 flex-1"><Topbar phase={phase} support={support} risk={risk} /><main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-12"><div key={phase} className="animate-fade-in">{phase === 'briefing' && <Briefing onContinue={() => act({ type: 'briefing-complete' }, 'budget')} />}{phase === 'budget' && <Budget budget={budget} onBudgetChange={changeBudget} onContinue={() => act({ type: 'budget-locked', payload: budget }, 'negotiation')} />}{phase === 'negotiation' && <Negotiation negotiated={negotiated} selectedGroup={selectedGroup} onSelectGroup={setSelectedGroup} onChoose={chooseOffer} onContinue={() => act({ type: 'negotiations-complete' }, 'election')} />}{phase === 'election' && <Election onContinue={() => act({ type: 'context-acknowledged' }, 'confidence')} />}{phase === 'confidence' && <Confidence onChoose={(choice) => { setConfidenceChoice(choice); act({ type: 'confidence-choice', payload: choice }, 'vote'); }} />}{phase === 'vote' && <Vote choice={confidenceChoice} onFinish={finishVote} />}{phase === 'ending' && <Ending success={success} support={support} onRestart={() => { setSupport(48); setRisk(54); setNegotiated({}); setConfidenceChoice('vote'); setSuccess(false); updatePhase('landing'); }} />}</div></main><footer className="mx-auto flex max-w-7xl items-center justify-between border-t border-[hsl(var(--border))] px-4 py-5 sm:px-6 lg:px-12"><span className="font-mono text-[9px] uppercase tracking-[.16em] text-[hsl(var(--muted-foreground))]">Mission Matignon · Fiction politique</span><span className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[.12em] text-[hsl(var(--muted-foreground))]"><PanelLeft size={12} /> Session sécurisée</span></footer></div></div></div>;
+  const seatsFor = Object.entries(negotiated).reduce((total, [groupId, offer]) => total + seatsForOffer(groupId as GroupId, offer), 0);
+  const chooseOffer = (group: GroupId, offer: number) => {
+    setNegotiated((old) => ({ ...old, [group]: offer }));
+    setSupport((old) => {
+      const previousOffer = negotiated[group];
+      const nextSupport = old - (previousOffer === undefined ? 0 : supportChange(previousOffer)) + supportChange(offer);
+      return Math.max(0, Math.min(100, nextSupport));
+    });
+    setRisk((old) => {
+      const previousOffer = negotiated[group];
+      const previousRisk = previousOffer === undefined ? 0 : previousOffer === 2 ? 5 : -1;
+      const nextRisk = offer === 2 ? 5 : -1;
+      return Math.max(0, Math.min(100, old - previousRisk + nextRisk));
+    });
+    act({ type: 'negotiation', payload: { group, offer, seats: seatsForOffer(group, offer) } });
+  };
+  const finishVote = (wasAmendment: boolean) => {
+    const finalSeats = Math.min(TOTAL_SEATS, seatsFor + (wasAmendment ? 30 : 0));
+    const won = finalSeats >= MAJORITY_SEATS;
+    setSuccess(won);
+    act({ type: 'final-vote', payload: { won, choice: confidenceChoice, wasAmendment, finalSeats } }, 'ending');
+  };
+  return <div className="noise-bg min-h-[100dvh] bg-[hsl(var(--background))]"><div className="flex min-h-[100dvh]"><ProgressRail phase={phase} /><div className="min-w-0 flex-1"><Topbar phase={phase} support={support} risk={risk} seatsFor={seatsFor} /><main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-12"><div key={phase} className="animate-fade-in">{phase === 'briefing' && <Briefing onContinue={() => act({ type: 'briefing-complete' }, 'budget')} />}{phase === 'budget' && <Budget budget={budget} onBudgetChange={changeBudget} onContinue={() => act({ type: 'budget-locked', payload: budget }, 'negotiation')} />}{phase === 'negotiation' && <Negotiation negotiated={negotiated} selectedGroup={selectedGroup} seatsFor={seatsFor} onSelectGroup={setSelectedGroup} onChoose={chooseOffer} onContinue={() => act({ type: 'negotiations-complete' }, 'election')} />}{phase === 'election' && <Election onContinue={() => act({ type: 'context-acknowledged' }, 'confidence')} />}{phase === 'confidence' && <Confidence onChoose={(choice) => { setConfidenceChoice(choice); act({ type: 'confidence-choice', payload: choice }, 'vote'); }} />}{phase === 'vote' && <Vote choice={confidenceChoice} onFinish={finishVote} />}{phase === 'ending' && <Ending success={success} support={support} onRestart={() => { setSupport(48); setRisk(54); setNegotiated({}); setConfidenceChoice('vote'); setSuccess(false); updatePhase('landing'); }} />}</div></main><footer className="mx-auto flex max-w-7xl items-center justify-between border-t border-[hsl(var(--border))] px-4 py-5 sm:px-6 lg:px-12"><span className="font-mono text-[9px] uppercase tracking-[.16em] text-[hsl(var(--muted-foreground))]">Mission Matignon · Fiction politique</span><span className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[.12em] text-[hsl(var(--muted-foreground))]"><PanelLeft size={12} /> Session active</span></footer></div></div></div>;
 }
 
 function Router() {
