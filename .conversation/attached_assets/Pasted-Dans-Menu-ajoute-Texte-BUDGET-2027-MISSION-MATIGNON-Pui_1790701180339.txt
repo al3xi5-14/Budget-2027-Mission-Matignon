@@ -1,0 +1,373 @@
+Dans Menu, ajoute :
+
+Texte
+
+BUDGET 2027
+MISSION MATIGNON
+
+Puis un bouton :
+
+COMMENCER
+
+Tu peux utiliser un objet texte avec un comportement bouton, ou simplement un Sprite/Panel + texte.
+
+Événement
+
+Dans l'éditeur d'événements :
+
+Condition :
+
+Curseur/touch est sur BoutonCommencer
+
++
+
+Bouton gauche relâché
+
+Action :
+
+Changer la scène → Briefing
+
+3. Le briefing
+
+Fais quelque chose de très court :
+
+MISSION
+
+Vous êtes chargé de défendre le projet de budget 2027.
+
+L'Assemblée ne dispose pas d'une majorité absolue.
+
+Vous devrez négocier avec différents groupes afin de trouver suffisamment de soutien.
+
+C'est directement lié à la problématique du dossier : l'absence de majorité rend la décision plus difficile.
+
+Bouton :
+
+COMMENCER LA PRÉPARATION
+
+→ scène Budget.
+
+4. Le système de variables
+
+C'est le cœur du jeu.
+
+Crée des variables globales :
+
+Budget = 100
+Soutien = 50
+RisqueCensure = 0
+GroupesSoutien = 0
+
+Ce sont des valeurs de gameplay inventées.
+
+Par exemple :
+
+Budget = 100
+
+signifie simplement que le joueur dispose de 100 unités fictives.
+
+5. L'écran Budget
+
+Tu peux faire une interface comme :
+
+┌──────────────────────────────────────────────┐
+│             BUDGET 2027                     │
+│                                              │
+│ 💰 Ressources : 100                         │
+│ 🤝 Soutien : 50 %                           │
+│ ⚠️ Risque de censure : 0 %                  │
+│                                              │
+│        RÉPARTITION DES RESSOURCES            │
+│                                              │
+│ [ Priorité A ]     30                       │
+│ [ Priorité B ]     25                       │
+│ [ Priorité C ]     20                       │
+│                                              │
+│              [ VALIDER ]                    │
+└──────────────────────────────────────────────┘
+
+Tu peux faire très simple au début.
+
+Ne cherche pas encore à faire de beaux graphismes.
+
+Fais fonctionner les boutons et les variables.
+
+6. Maintenant arrive la partie intéressante : les négociations
+
+C'est ici que ton idée devient vraiment un jeu.
+
+Crée par exemple :
+
+Groupe A
+Groupe B
+Groupe C
+Groupe D
+
+⚠️ Attention : ne présente pas ces groupes comme les probabilités réelles de comportement des partis. Les pourcentages seront les règles internes de ton jeu.
+
+7. Exemple d'une négociation
+
+Écran :
+
+GROUPE A
+
+« Nous pouvons soutenir votre projet si vous acceptez notre condition. »
+
+Condition :
+Modifier la mesure X.
+
+Chance d'accord : 65 %
+
+[ACCEPTER]
+[REFUSER]
+[NÉGOCIER]
+
+Si le joueur accepte :
+
+Soutien +15
+Budget -10
+
+Si le joueur refuse :
+
+Soutien -15
+RisqueCensure +10
+
+Si le joueur négocie :
+
+Chance d'accord = 45 %
+
+Puis tu fais un tirage aléatoire.
+
+8. Faire le pourcentage de réussite
+
+C'est assez simple dans GDevelop.
+
+Tu peux utiliser une condition du genre :
+
+RandomInRange(1,100) ≤ ChanceAccord
+
+Par exemple :
+
+ChanceAccord = 65
+
+GDevelop génère un nombre entre 1 et 100.
+
+Si :
+
+42 ≤ 65
+
+→ accord réussi.
+
+Si :
+
+81 ≤ 65
+
+→ échec.
+
+Et là ton jeu devient beaucoup plus intéressant.
+
+9. Ajouter les exigences
+
+Chaque groupe peut avoir une demande.
+
+Par exemple :
+
+Groupe A
+Exigence : mesure X
+
+Groupe B
+Exigence : mesure Y
+
+Groupe C
+Exigence : mesure Z
+
+Le joueur doit choisir :
+
+ACCEPTER LA CONDITION
+
+ou
+
+REFUSER
+
+Et certaines décisions peuvent avoir des conséquences plusieurs tours plus tard.
+
+Par exemple :
+
+Tour 1
+
+Groupe A :
+
+« Nous demandons X. »
+
+Tu refuses.
+
+→ RelationA = -20
+
+Tour 3
+
+Tu demandes leur soutien.
+
+Le jeu calcule :
+
+ChanceAccord = ChanceBase + RelationA
+
+Donc ton choix précédent a une conséquence.
+
+Ça donne une vraie sensation de stratégie.
+
+10. Ajouter des « lignes rouges »
+
+C'est particulièrement intéressant parce que ton dossier donne un exemple concret : le RN présente la désindexation des retraites comme une ligne rouge dans le contexte décrit par le document.
+
+Tu peux donc avoir dans le jeu :
+
+⚠️ LIGNE ROUGE
+
+Une mesure actuellement présente dans votre budget est incompatible avec la demande de ce groupe.
+
+Le joueur peut :
+
+Maintenir la mesure
+
+→ soutien ↓
+
+ou
+
+Modifier la mesure
+
+→ coût budgétaire ↑ mais soutien ↑.
+
+11. Le système de coalition
+
+C'est là que je pense que ton jeu peut devenir vraiment bon.
+
+Chaque groupe possède :
+
+SoutienA = 0
+SoutienB = 0
+SoutienC = 0
+SoutienD = 0
+
+Et tu affiches :
+
+🤝 Soutiens obtenus : 2 / 4
+
+Chaque négociation réussie fait passer un groupe à :
+
+🟢 ALLIÉ
+
+Une négociation ratée :
+
+🔴 OPPOSÉ
+
+Tu peux ensuite avoir :
+
+SOUTIENS AU PROJET
+
+🟢 Groupe A
+🟢 Groupe C
+🔴 Groupe B
+⚪ Groupe D
+
+12. La présidentielle
+
+À mi-parcours, fais apparaître :
+
+📅 ÉVÉNEMENT
+
+L'élection présidentielle de 2027 approche.
+
+Les groupes deviennent moins disposés à soutenir certaines décisions.
+
+C'est un élément bien présent dans ton dossier : le budget est préparé dans le contexte de la campagne présidentielle et les positions des groupes peuvent être influencées par ce contexte.
+
+Tu peux alors appliquer un malus de gameplay, par exemple :
+
+ChanceAccord -10
+13. La motion de censure
+
+Après les négociations :
+
+🚨 MOTION DE CENSURE
+
+Tu expliques brièvement dans le jeu :
+
+« L'Assemblée nationale peut mettre en cause la responsabilité du Gouvernement par une motion de censure. »
+
+Le dossier précise qu'elle doit être adoptée à la majorité des membres composant l'Assemblée.
+
+Tu peux alors avoir une jauge :
+
+Soutiens au Gouvernement
+████████████░░░░ 60 %
+
+Mais attention : cette jauge est une simplification ludique, pas une représentation exacte des règles de vote.
+
+14. Ajouter le 49.3
+
+Tu peux donner au joueur une décision spéciale :
+
+UTILISER LE 49.3
+
+Puis afficher :
+
+« Le Premier ministre peut engager la responsabilité du Gouvernement sur un texte. Celui-ci est considéré comme adopté sauf si une motion de censure est ensuite votée dans les conditions prévues. »
+
+C'est exactement le mécanisme présenté dans ton document.
+
+Tu pourrais faire du 49.3 une décision à fort risque dans le jeu.
+
+15. Le vote final
+
+Enfin :
+
+🗳️ VOTE DU BUDGET 2027
+
+Puis une petite animation :
+
+Soutien du groupe A... ✓
+Soutien du groupe B... ✓
+Soutien du groupe C... ✗
+Soutien du groupe D... ✓
+
+Puis :
+
+🟢 FIN 1
+
+BUDGET ADOPTÉ
+
+Vous avez réussi à obtenir suffisamment de soutien.
+
+🔴 FIN 2
+
+GOUVERNEMENT EN DIFFICULTÉ
+
+Les négociations n'ont pas permis de réunir suffisamment de soutien.
+
+🔴 FIN 3
+
+CENSURE
+
+La motion de censure a été adoptée.
+
+16. Ensuite seulement : les graphismes
+
+Une fois que tout fonctionne, tu fais le look.
+
+Je verrais quelque chose comme :
+
+Style : interface gouvernementale / jeu de stratégie
+
+Fond sombre, panneaux, graphiques, cartes des groupes, animations très sobres.
+
+Par exemple :
+
+MATIGNON — 27 SEPTEMBRE 2026
+
+BUDGET 2027
+
+💰 100 unités
+🤝 52 % soutien
+⚠️ 34 % tension
+
+Puis une musique discrète et des effets sonores.

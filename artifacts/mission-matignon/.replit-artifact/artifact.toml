@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Budget 2027 — Mission Matignon"
+description = "Jeu de stratégie politique jouable dans lequel le joueur prépare le budget 2027, négocie avec plusieurs groupes parlementaires et tente d’éviter une motion de censure."
+version = "1.0.0"
+id = "artifacts/mission-matignon"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20460
+
+[services.development]
+run = "pnpm --filter @workspace/mission-matignon run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/mission-matignon", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/mission-matignon/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20460"
+BASE_PATH = "/"
